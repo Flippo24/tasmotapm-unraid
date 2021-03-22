@@ -1,0 +1,58 @@
+Menu="Utilities"
+Icon="tasmotapm.png"
+Title="Tasmota Power Monitor"
+---
+<?php
+$tasmotapm_cfg 			= parse_plugin_cfg("tasmotapm",true);
+$tasmotapm_device_ip	= isset($tasmotapm_cfg['DEVICE_IP']) ? $tasmotapm_cfg['DEVICE_IP'] : "";
+$tasmotapm_use_pass			= isset($tasmotapm_cfg['DEVICE_USE_PASS']) ? $tasmotapm_cfg['DEVICE_USE_PASS'] : "false";
+$tasmotapm_device_user	= isset($tasmotapm_cfg['DEVICE_USER']) ? $tasmotapm_cfg['DEVICE_USER'] : "admin";
+$tasmotapm_device_pass	= isset($tasmotapm_cfg['DEVICE_PASS']) ? $tasmotapm_cfg['DEVICE_PASS'] : "";
+$tasmotapm_uirefresh 		= isset($tasmotapm_cfg['UIREFRESH']) ? $tasmotapm_cfg['UIREFRESH'] : "1000";
+$tasmotapm_costs_price	= isset($tasmotapm_cfg['COSTS_PRICE']) ? $tasmotapm_cfg['COSTS_PRICE'] : "0.0";
+$tasmotapm_costs_unit	= isset($tasmotapm_cfg['COSTS_UNIT']) ? $tasmotapm_cfg['COSTS_UNIT'] : "USD";
+?>
+
+<form markdown="1" method="POST" action="/update.php" target="progressFrame">
+<input type="hidden" name="#file" value="tasmotapm/tasmotapm.cfg" />
+
+Use a password for Tasmota Web UI:
+: <select id="DEVICE_USE_PASS" name="DEVICE_USE_PASS" size="1">
+  <?=mk_option($tasmotapm_use_pass, "0", "No");?>
+  <?=mk_option($tasmotapm_use_pass, "1", "Yes");?>
+  </select>
+
+Username:
+: <input id="DEVICE_USER" type="text" class="stopped" name="DEVICE_USER" maxlength="50" value="<?=$tasmotapm_device_user;?>" title="" placeholder="" >  
+
+Password:
+: <input id="DEVICE_PASS" type="password" class="stopped" name="DEVICE_PASS" maxlength="50" value="<?=$tasmotapm_device_pass;?>" title="" placeholder="" >  
+
+Device IP:
+: <input id="DEVICE_IP" type="text" class="stopped" name="DEVICE_IP" maxlength="15" value="<?=$tasmotapm_device_ip;?>" title="" placeholder="" >  
+
+UI Refresh rate (Milliseconds):
+: <input type="text" name="UIREFRESH" class="narrow" maxlength="50" value="<?=$tasmotapm_uirefresh;?>" placeholder="1000">
+
+Price per kWh for cost calculation:
+: <input id="COSTS_PRICE" type="text" class="stopped" name="COSTS_PRICE" maxlength="10" value="<?=$tasmotapm_costs_price;?>" title="" placeholder="0.00" >  
+
+Unit for cost calculation:
+: <input id="COSTS_UNIT" type="text" class="stopped" name="COSTS_UNIT" maxlength="10" value="<?=$tasmotapm_costs_unit;?>" title="" placeholder="" >  
+
+ <input id="DEFAULT" class="stopped" type="submit" value="Default" onClick="resetDATA(this.form)">
+: <input id="btnApply" type="submit" value="Apply"><input type="button" value="Done" onClick="done()">
+</form>
+
+
+<script type="text/javascript">
+function resetDATA(form) {
+	form.DEVICE_IP.value = "";
+  form.DEVICE_USE_PASS.value = 0;
+  form.DEVICE_USER.value = "";
+  form.DEVICE_PASS.value = "";
+  form.UIREFRESH.value = 1000;
+  form.COSTS_PRICE.value = 0.00;
+  form.COSTS_UNIT.value = "USD";
+}
+</script>

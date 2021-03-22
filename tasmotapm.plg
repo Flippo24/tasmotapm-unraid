@@ -1,0 +1,33 @@
+<?xml version='1.0' standalone='yes'?>
+<!DOCTYPE PLUGIN [
+<!ENTITY name      "tasmotapm">
+<!ENTITY author    "Flippo24">
+<!ENTITY version   "2021.03.22">
+<!ENTITY launch    "Settings/TasmotaPMSettings">
+<!ENTITY gitURL    "https://raw.githubusercontent.com/Flippo24/&name;-unraid/main">
+<!ENTITY pluginURL "&gitURL;/&name;.plg">
+<!ENTITY pkgURL    "&gitURL;/pkg">
+<!ENTITY plgPATH   "/boot/config/plugins/&name;">
+<!ENTITY plgNAME   "&name;-&version;-x86_64">
+<!ENTITY emhttp    "/usr/local/emhttp/plugins/&name;">
+]>
+<PLUGIN name="&name;" author="&author;" version="&version;" icon="tasmotapm.png" launch="&launch;" pluginURL="&pluginURL;">
+<CHANGES>
+##&name;
+###2021.03.22
+- Inital release.
+</CHANGES>
+
+ <FILE Name="&plgPATH;/&plgNAME;.txz" Min="6.9.1" Run="upgradepkg --install-new">
+  <URL>&pkgURL;/&plgNAME;.txz</URL>
+ </FILE>
+ <FILE Run="/bin/bash" Method="remove">
+  <INLINE>
+   echo "Removing &name;..."
+   removepkg &plgPATH;/*.txz
+   rm -rf &plgPATH;
+   rm -rf &emhttp;
+   echo "&name; has been removed"
+  </INLINE>
+ </FILE>
+</PLUGIN>
