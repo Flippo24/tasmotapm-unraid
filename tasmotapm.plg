@@ -2,7 +2,7 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "tasmotapm">
 <!ENTITY author    "Flippo24">
-<!ENTITY version   "2021.03.24">
+<!ENTITY version   "2021.03.22">
 <!ENTITY launch    "Settings/TasmotaPMSettings">
 <!ENTITY gitURL    "https://raw.githubusercontent.com/Flippo24/&name;-unraid/main">
 <!ENTITY pluginURL "&gitURL;/&name;.plg">
