@@ -5,7 +5,7 @@ Icon="ups"
     <?php
         $tasmotapm_cfg = parse_plugin_cfg("tasmotapm",true);
     ?>
-    #dash_tasmotapm_settings i, #tasmotapm_view {margin-top:0px;}  
+    #dash_tasmotapm_settings i, #dash_tasmotapm_toggle {margin-top:0px;}  
     .dash_tasmotapm_header {padding-top: 20px} 
     .dash_tasmotapm_section {
         line-height:1.4em !important;
@@ -14,87 +14,87 @@ Icon="ups"
     .dash_tasmotapm_table_header {text-decoration:underline;}
 </style>
 
-<table id='db-box1' class='dash_tasmotapm dashboard box1' style="display:none">
-    <thead sort='<?=++$N?>'>
-	    <tr class='hidden'>
-		    <td></td>
-		    <td colspan='3'></td>
-		<td></td>
-	    </tr>
-    </thead>
-    <tbody sort='<?=$N?>' class='sortable'>
-	    <tr>
-		    <td></td>
-		    <td colspan='3' class='next'>
-                <i class='icon-ups'></i>
-                <div class='section'>_(Tasmota Power Monitor)_<br><span id='load'>_(Usage)_: <span class='tasmotapm-energy-power'>0</span> W</span><br><br></div>
-                <i class='fa fa-fw chevron' id='tasmotapm_view' onclick='toggleChevron("tasmotapm_view",0)'></i>
-                <a href='/Settings/TasmotaPMSettings' title="_(Go to Tasmota Power Monitor settings)_"><i class='fa fa-fw fa-cog chevron'></i></a>
+<table id='db-box1' class='dash_tasmotapm dashboard box1'style="display:none">
+    <thead sort='<?=++$N?>' class="sortable">
+        <tr>
+            <td></td>
+            <td class="next dash_tasmotapm_header" colspan="3">
+                <i class="icon-ups"></i>
+                <div class="section dash_tasmotapm_section">Tasmota Power Monitor
+                    <br>
+                    <span id='load'>_(Usage)_: <span class='tasmotapm-energy-power'>0</span> W</span>
+                    <br>
+                </div>
+                <i class="fa fa-fw chevron mt0" id="dash_tasmotapm_toggle" onclick="toggleChevron('dash_tasmotapm_toggle',0)"></i>
+                <a href='/Settings/TasmotaPMSettings' title="_(Go to Tasmota Power Monitor settings)_">
+                    <i class='fa fa-fw fa-cog chevron'></i>
+                </a>
             </td>
             <td></td>
-    	</tr>
-	    <tr class='tasmotapm_view'>
-            <tr class="tasmotapm-energy tasmotapm_view">
+        </tr>
+    </thead>
+    <tbody class='dash_tasmotapm_toggle sortable' sort='<?=$N?>'>
+            <tr class="tasmotapm-energy">
                 <td></td>
                 <td>Today:</td>
                 <td><span class="tasmotapm-energy-today"></span> kWh</td>
                 <td><span class="tasmotapm-costs_today"></span> <span class="tasmotapm-costs_unit"></span></td>
                 <td></td>
             </tr>
-            <tr class="tasmotapm-energy tasmotapm_view">
+            <tr class="tasmotapm-energy">
                 <td></td>
                 <td>Yesterday:</td>
                 <td><span class="tasmotapm-energy-yesterday"></span> kWh</td>
                 <td><span class="tasmotapm-costs_yesterday"></span> <span class="tasmotapm-costs_unit"></span></td>
                 <td></td>
             </tr>
-            <tr class="tasmotapm-energy tasmotapm_view">
+            <tr class="tasmotapm-energy">
                 <td></td>
                 <td>Total:</td>
                 <td><span class="tasmotapm-energy-total"></span> kWh</td>
                 <td><span class="tasmotapm-costs_total"></span> <span class="tasmotapm-costs_unit"></span></td>
                 <td></td>
             </tr>
-            <tr class="tasmotapm-power tasmotapm_view">
+            <tr><td colspan="5"></td></tr><tr><td colspan="5"></td></tr>    
+            <tr class="tasmotapm-power">
                 <td></td>
                 <td>Power</td>
                 <td colspan="2"><span class="tasmotapm-energy-power"></span> W</td>
                 <td></td>
             </tr>
-            <tr class="tasmotapm-voltage tasmotapm_view">
+            <tr class="tasmotapm-voltage">
                 <td></td>
                 <td>Voltage</td>
                 <td colspan="2"><span class="tasmotapm-energy-voltage"></span> V</td>
                 <td></td>
             </tr>
-            <tr class="tasmotapm-current tasmotapm_view">
+            <tr class="tasmotapm-current">
                 <td></td>
                 <td>Current</td>
                 <td colspan="2"><span class="tasmotapm-energy-current"></span> A</td>
                 <td></td>
             </tr>
-            <tr class="tasmotapm-apparentpower tasmotapm_view">
+            <tr class="tasmotapm-apparentpower">
                 <td></td>
                 <td>Apparent power</td>
                 <td colspan="2"><span class="tasmotapm-energy-apparentpower"></span> VA</td>
                 <td></td>
             </tr>
-            <tr class="tasmotapm-reactivepower tasmotapm_view">
+            <tr class="tasmotapm-reactivepower">
                 <td></td>
                 <td>Reactive power</td>
                 <td colspan="2"><span class="tasmotapm-energy-reactivepower"></span> VAr</td>
                 <td></td>
             </tr>
-            <tr class="tasmotapm-efficiency tasmotapm_view">
+            <tr class="tasmotapm-efficiency">
                 <td></td>
                 <td>Efficiency</td>
                 <td colspan="2"><span class="tasmotapm-energy-efficiency"></span> %</td>
                 <td></td>
             </tr>
-        </tr>
     </tbody>
 </table>
-
+</div>
 <script>
 const tasmotapm_status = () => {
     $.getJSON("/plugins/tasmotapm/status.php", (data) => {
@@ -107,7 +107,7 @@ const tasmotapm_status = () => {
             $(".tasmotapm-energy-current").html(data.Current);
             $(".tasmotapm-energy-apparentpower").html(data.ApparentPower);
             $(".tasmotapm-energy-reactivepower").html(data.ReactivePower);
-            $(".tasmotapm-energy-efficiency").html((Number.parseFloat(data.Factor) * 100).toFixed(2));
+            $(".tasmotapm-energy-efficiency").html(data.Factor);
             $(".tasmotapm-costs_today").html((Number.parseFloat(data.Costs_Price) * Number.parseFloat(data.Today)).toFixed(2));
             $(".tasmotapm-costs_yesterday").html((Number.parseFloat(data.Costs_Price) * Number.parseFloat(data.Yesterday)).toFixed(2));
             $(".tasmotapm-costs_total").html((Number.parseFloat(data.Costs_Price) * Number.parseFloat(data.Total)).toFixed(2));
@@ -125,7 +125,7 @@ $(function() {
   $("#db-box1").append($(".dash_tasmotapm").html());
   
   // reload toggle to get the correct state
-  toggleView('tasmotapm_view',true);
+  toggleView('dash_tasmotapm_toggle',true);
   
   // reload sorting to get the stored data (cookie)
   sortTable($('#db-box1'),$.cookie('db-box1'));
